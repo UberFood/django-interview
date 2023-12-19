@@ -1,4 +1,6 @@
-const socket = new WebSocket('ws://127.0.0.1:8000/ws');
+var SERVER_ADDRESS = location.origin.replace(/^http/, 'ws') + "/ws";
+console.log(SERVER_ADDRESS)
+const socket = new WebSocket(SERVER_ADDRESS);
 
 socket.onopen = function(e) {
   console.log("Tried to connect to server");
