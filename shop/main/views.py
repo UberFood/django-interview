@@ -73,3 +73,12 @@ def buy_item(request, item_id):
         item.owner = User
         item.save()
     return HttpResponseRedirect("/main")
+
+def add_money(request):
+    if request.method == "POST":
+        User = request.user
+        amount = request.POST.get("amount")
+        user_wallet = Wallet.objects.get(user = User)
+        user_wallet.amount += int(amount)
+        user_wallet.save()
+    return HttpResponseRedirect("/main")

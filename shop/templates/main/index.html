@@ -3,6 +3,13 @@
   <a href="{% url 'main:add_item' %}">Добавить предмет</a>
   <a href="{% url 'main:my_items' %}">Мои предметы</a>
   <p>Баланс: {{money}}</p>
+  <th><form action="add_money/" method="post">
+        {% csrf_token %}
+        <label for="amount">Монет</label>
+        <input type="number" id="amount" name="amount">
+        <button type="submit" name="add_money_button" value="add_money_button" class="btn-link">Пополнить баланс</button>
+      </form>
+  </th>
 
   <table>
     {% for sale in sale_list %}
