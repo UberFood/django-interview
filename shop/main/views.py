@@ -3,6 +3,11 @@ from django.http import HttpResponseRedirect, HttpResponseNotFound, Http404
 
 from .models import Item, Sale, Wallet
 
+from asgiref.sync import async_to_sync
+
+from shop.consumers import YourConsumer
+from channels.layers import get_channel_layer
+
 def index(request):
     sale_list = Sale.objects.all()
     try:
@@ -58,6 +63,12 @@ def put_on_sale(request, item_id):
         sale.item = item
         sale.price = request.POST.get("price")
         sale.save()
+
+        message = {
+            "type": "websocket.send",
+            "text": item.owner.username + " выставил " + item.name + " на продажу"
+        }
+        YourConsumer.send_message(message)
     return HttpResponseRedirect("/main")
 
 def buy_item(request, item_id):

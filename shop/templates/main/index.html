@@ -1,6 +1,7 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'main/style.css' %}">
+<script src="{% static 'main/index.js' %}"></script>
 
 {% if user.is_authenticated %}
   Привет {{ user.username }}!
