@@ -1,5 +1,11 @@
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
+  Привет {{ user.username }}!
+  <a href="{% url 'main:add_item' %}">Добавить предмет на продажу</a>
+
+  {% for item in item_list %}
+        <li>{{item.item_name}}</li>
+  {% endfor %}
+
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Log In</a>
