@@ -9,6 +9,11 @@
               <th>{{sale.item.name}}</th>
               <th>{{sale.item.owner}}</th>
               <th>{{sale.price}}</th>
+              <th><form action="buy/{{sale.item.id}}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="buy_button" value="buy_button" class="btn-link">Купить</button>
+                  </form>
+              </th>
           </tr>
     {% endfor %}
   </table>

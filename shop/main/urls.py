@@ -9,4 +9,5 @@ urlpatterns = [
     path("my_items/", views.my_items, name="my_items"),
     path("my_items/sell/<int:item_id>", views.sell_item_form, name="sell_item_form"),
     path("my_items/sell/on_sale/<int:item_id>", views.put_on_sale, name="put_on_sale"),
+    path("buy/<int:item_id>", views.buy_item, name="buy_item"),
 ]

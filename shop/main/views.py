@@ -51,3 +51,13 @@ def put_on_sale(request, item_id):
         sale.price = request.POST.get("price")
         sale.save()
     return HttpResponseRedirect("/main")
+
+def buy_item(request, item_id):
+    if request.method == "POST":
+        User = request.user
+        item = Item.objects.get(pk=item_id);
+        sale = Sale.objects.filter(item = item)
+        sale.delete()
+        item.owner = User
+        item.save()
+    return HttpResponseRedirect("/main")
