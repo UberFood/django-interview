@@ -8,7 +8,11 @@ def index(request):
     try:
         money = Wallet.objects.get(user = request.user)
     except Wallet.DoesNotExist:
-        raise Http404("Wallet does not exist")
+        wallet = Wallet()
+        wallet.user = request.user
+        wallet.amount = 0
+        wallet.save()
+        money = wallet
     context = {"sale_list": sale_list, "money": money.amount}
     return render(request, "main/index.html", context)
 

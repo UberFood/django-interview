@@ -1,15 +1,30 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'main/style.css' %}">
+
 {% if user.is_authenticated %}
   Привет {{ user.username }}!
-  <a href="{% url 'main:add_item' %}">Добавить предмет</a>
-  <a href="{% url 'main:my_items' %}">Мои предметы</a>
-  <p>Баланс: {{money}}</p>
-  <th><form action="add_money/" method="post">
-        {% csrf_token %}
-        <label for="amount">Монет</label>
-        <input type="number" id="amount" name="amount">
-        <button type="submit" name="add_money_button" value="add_money_button" class="btn-link">Пополнить баланс</button>
-      </form>
-  </th>
+  <div class="horizontal_container">
+    <form action="{% url 'main:add_item' %}">
+          {% csrf_token %}
+          <button type="submit" name="add_item_button" value="add_item_button" class="btn-link">Добавить предмет</button>
+    </form>
+    <form action="{% url 'main:my_items' %}">
+          {% csrf_token %}
+          <button type="submit" name="my_items_button" value="my_items_button" class="btn-link">Мои предметы</button>
+    </form>
+  </div>
+
+  <div class="horizontal_container">
+    <p>Баланс: {{money}}</p>
+    <th><form action="add_money/" method="post">
+          {% csrf_token %}
+          <label for="amount">Монет</label>
+          <input type="number" id="amount" name="amount">
+          <button type="submit" name="add_money_button" value="add_money_button" class="btn-link">Пополнить баланс</button>
+        </form>
+    </th>
+  </div>
 
   <table>
     {% for sale in sale_list %}
