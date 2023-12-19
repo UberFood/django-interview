@@ -1,9 +1,9 @@
-<h2>Выставить на продажу</h2>
+<h2>Добавление предмета</h2>
 <form method="post" action="item_added/">
   {% csrf_token %}
-  <label for="item_name">Название предмета</label><br>
+  <label for="name">Название предмета</label><br>
   <input type="text" id="item_name" name="item_name"><br>
-  <label for="price">Цена</label><br>
-  <input type="number" id="price" name="price"><br>
+  <label for="description">Описание</label><br>
+  <input type="text" id="description" name="description"><br>
   <button type="submit">Добавить</button>
 </form>

@@ -15,8 +15,8 @@ def add_item(request):
 def item_added(request):
     if request.method == "POST":
         item = Item()
-        item.item_name = request.POST.get("item_name")
-        item.price = request.POST.get("price")
-        item.vendor = request.user
+        item.name = request.POST.get("item_name")
+        item.description = request.POST.get("description")
+        item.owner = request.user
         item.save()
     return HttpResponseRedirect("/main")

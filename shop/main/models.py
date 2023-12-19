@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Item(models.Model):
-    item_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=200)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Sale(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     price = models.IntegerField(default=1)
-    vendor = models.ForeignKey(User, on_delete=models.CASCADE)
