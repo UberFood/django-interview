@@ -2,6 +2,7 @@
   Привет {{ user.username }}!
   <a href="{% url 'main:add_item' %}">Добавить предмет</a>
   <a href="{% url 'main:my_items' %}">Мои предметы</a>
+  <p>Баланс: {{money}}</p>
 
   <table>
     {% for sale in sale_list %}

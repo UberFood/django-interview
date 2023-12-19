@@ -1,11 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponseNotFound
+from django.http import HttpResponseRedirect, HttpResponseNotFound, Http404
 
-from .models import Item, Sale
+from .models import Item, Sale, Wallet
 
 def index(request):
     sale_list = Sale.objects.all()
-    context = {"sale_list": sale_list}
+    try:
+        money = Wallet.objects.get(user = request.user)
+    except Wallet.DoesNotExist:
+        raise Http404("Wallet does not exist")
+    context = {"sale_list": sale_list, "money": money.amount}
     return render(request, "main/index.html", context)
 
 def add_item(request):
@@ -56,7 +60,15 @@ def buy_item(request, item_id):
     if request.method == "POST":
         User = request.user
         item = Item.objects.get(pk=item_id);
-        sale = Sale.objects.filter(item = item)
+        sale = Sale.objects.get(item = item)
+        price = sale.price
+        user_wallet = Wallet.objects.get(user = User)
+        vendor_wallet = Wallet.objects.get(user = item.owner)
+
+        user_wallet.amount -= price
+        user_wallet.save()
+        vendor_wallet.amount += price
+        vendor_wallet.save()
         sale.delete()
         item.owner = User
         item.save()

@@ -9,3 +9,7 @@ class Item(models.Model):
 class Sale(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     price = models.IntegerField(default=1)
+
+class Wallet(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.IntegerField(default=0)
