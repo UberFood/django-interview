@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 
-from .models import Item
+from .models import Item, Sale
 
 def index(request):
-    item_list = Item.objects.all()
-    context = {"item_list": item_list}
+    sale_list = Sale.objects.all()
+    context = {"sale_list": sale_list}
     return render(request, "main/index.html", context)
 
 def add_item(request):
@@ -19,4 +19,24 @@ def item_added(request):
         item.description = request.POST.get("description")
         item.owner = request.user
         item.save()
+    return HttpResponseRedirect("/main")
+
+def my_items(request):
+    User = request.user
+    my_item_list = Item.objects.filter(owner = User)
+    context = {"item_list": my_item_list}
+    return render(request, "main/my_items.html", context)
+
+def sell_item_form(request, item_id):
+    item = Item.objects.get(pk=item_id);
+    context = {"item": item}
+    return render(request, "main/sell_item_form.html", context)
+
+def put_on_sale(request, item_id):
+    if request.method == "POST":
+        item = Item.objects.get(pk=item_id);
+        sale = Sale()
+        sale.item = item
+        sale.price = request.POST.get("price")
+        sale.save()
     return HttpResponseRedirect("/main")

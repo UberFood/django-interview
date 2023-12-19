@@ -1,12 +1,14 @@
 {% if user.is_authenticated %}
   Привет {{ user.username }}!
   <a href="{% url 'main:add_item' %}">Добавить предмет</a>
+  <a href="{% url 'main:my_items' %}">Мои предметы</a>
 
   <table>
-    {% for item in item_list %}
+    {% for sale in sale_list %}
           <tr>
-              <th>{{item.name}}</th>
-              <th>{{item.owner}}</th>
+              <th>{{sale.item.name}}</th>
+              <th>{{sale.item.owner}}</th>
+              <th>{{sale.price}}</th>
           </tr>
     {% endfor %}
   </table>

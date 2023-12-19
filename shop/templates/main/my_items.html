@@ -1,0 +1,16 @@
+{% if user.is_authenticated %}
+  Привет {{ user.username }}!
+
+  <table>
+    {% for item in item_list %}
+          <tr>
+              <th>{{item.name}}</th>
+              <th><a href="sell/{{item.id}}">Выставить на продажу</a></th>
+          </tr>
+    {% endfor %}
+  </table>
+
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
