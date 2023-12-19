@@ -24,7 +24,18 @@ def item_added(request):
 def my_items(request):
     User = request.user
     my_item_list = Item.objects.filter(owner = User)
-    context = {"item_list": my_item_list}
+    sales = Sale.objects.filter(item__owner = User)
+    mixed_list = []
+    for item in my_item_list:
+        sale = sales.filter(item=item).first()
+        bool = True
+        if sale == None:
+            bool = False
+        price = 0
+        if bool:
+            price = sale.price
+        mixed_list.append((item, bool, price))
+    context = {"item_list": my_item_list, "mixed_list": mixed_list}
     return render(request, "main/my_items.html", context)
 
 def sell_item_form(request, item_id):

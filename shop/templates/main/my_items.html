@@ -2,10 +2,14 @@
   Привет {{ user.username }}!
 
   <table>
-    {% for item in item_list %}
+    {% for item in mixed_list %}
           <tr>
-              <th>{{item.name}}</th>
-              <th><a href="sell/{{item.id}}">Выставить на продажу</a></th>
+              <th>{{item.0.name}}</th>
+              {% if item.1%}
+                <th>{{item.2}}</th>
+              {% else %}
+                <th><a href="sell/{{item.0.id}}">Выставить на продажу</a></th>
+              {% endif %}
           </tr>
     {% endfor %}
   </table>
